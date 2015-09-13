@@ -1,0 +1,140 @@
+<ion-view view-title="{{'settings' | translate}}">
+    <ion-content delegate-handle="mainScroll">
+        <!--Main modes-->
+        <ion-list>
+            <ion-item>
+                {{"timeout" | translate}}
+                <input type="number" ng-model="settings.timeExpiry"
+                       placeholder="Timeout in seconds"/>{{timeExpiry}}
+
+            </ion-item>
+
+            <ion-item>
+                <div>
+                    <ion-radio ng-model="M5.lang" ng-value="'en'" ng-change="toggleLang()">English
+                    </ion-radio>
+                    <ion-radio ng-model="M5.lang" ng-value="'mr'" ng-change="toggleLang()">मराठी
+                    </ion-radio>
+                </div>
+            </ion-item>
+
+
+            <!--PandL math-->
+
+            <ion-item ng-class="getVisClass(M5.vis.visPandL)">
+                <div class="reset-pbm">
+                    <label class="item item-input item-select">
+                        <div class="input-label">
+                            {{"p_and_l" | translate}}
+                        </div>
+                        <select ng-model="M5.plOpt" ng-change="evtPandL()">
+                            <option ng-repeat="item in plCategoryOpt" value="{{item}}">{{item | translate}}</option>
+                        </select>
+                    </label>
+                </div>
+                <div class="reset-pbm">
+                    <ion-toggle ng-model="settings.enablePandL" ng-change="togglePandLEn()">
+                        {{"start" | translate}}
+                    </ion-toggle>
+                </div>
+            </ion-item>
+
+            <!--Word math-->
+
+            <ion-item ng-class="getVisClass(M5.vis.visWordMath)">
+                <div class="reset-pbm">
+                    <label class="item item-input item-select">
+                        <div class="input-label">
+                            {{"wordy" | translate}}
+                        </div>
+                        <select ng-model="M5.wordOpt" ng-change="evtWordCategory()">
+                            <option ng-repeat="item in wordCategoryOpt" value="{{item}}">{{item | translate}}</option>
+                        </select>
+                    </label>
+                </div>
+                <div class="reset-pbm">
+                    <ion-toggle ng-model="settings.enableWordMath" ng-change="toggleWordMathEn()">
+                        {{"start" | translate}}
+                    </ion-toggle>
+                </div>
+            </ion-item>
+
+            <!--LCM-GCF-->
+
+            <ion-item ng-class="getVisClass(M5.vis.visLcmGcf)">
+                <div class="reset-pbm">
+                    <ion-toggle ng-model="settings.enableLcm" ng-change="toggleEnLcm()">
+                        {{"lcm" | translate}}
+                    </ion-toggle>
+                </div>
+                <div class="reset-pbm">
+                    <ion-toggle ng-model="settings.enableGcf" ng-change="toggleEnGcf()">
+                        {{"gcf" | translate}}
+                    </ion-toggle>
+                </div>
+                <div class="reset-pbm">
+                    <label class="item item-input item-select">
+                        <div class="input-label">
+                            {{"quan" | translate}}
+                        </div>
+                        <select ng-model="M5.numOpt" ng-change="evtNumOptChg()">
+                            <option ng-repeat="item in numCategoryOpt" value="{{item}}">{{item | translate}}</option>
+                        </select>
+                    </label>
+                </div>
+                <div class="reset-pbm">
+                    <ion-toggle ng-model="settings.startLcmGcf" ng-disabled="isDisabled" ng-change="toggleStartLcmGcf()">
+                        {{"start" | translate}}
+                    </ion-toggle>
+                </div>
+            </ion-item>
+
+            <!--Vibhajyat-->
+
+            <ion-item ng-class="getVisClass(M5.vis.visVib)">
+                <div class="reset-pbm">
+                    <label class="item item-input item-select">
+                        <div class="input-label">
+                            {{"full_divide" | translate}}
+                        </div>
+                        <select ng-model="M5.vibOpt" ng-change="evtVibOptChg()">
+                            <option ng-repeat="item in vibCategoryOpt" value="{{item}}">{{item | translate}}</option>
+                        </select>
+                    </label>
+                </div>
+                <div class="reset-pbm">
+                    <ion-toggle ng-model="settings.enableVib" ng-change="toggleVib()">
+                        {{"start" | translate}}
+                    </ion-toggle>
+                </div>
+            </ion-item>
+            <!--Factorisation-->
+
+            <ion-item ng-class="getVisClass(M5.vis.visFactors)">
+                <div class="reset-pbm">
+                    <label class="item item-input item-select">
+                        <div class="input-label">
+                            {{"prime_factors" | translate}}
+                        </div>
+                        <select ng-model="M5.pfOpt" ng-change="evtPfOptChg()">
+                            <option ng-repeat="item in pfCategoryOpt" value="{{item}}">{{item | translate}}</option>
+                        </select>
+                    </label>
+                </div>
+                <div class="reset-pbm">
+                    <ion-toggle ng-model="settings.enableFactors" ng-change="toggleFactors()">
+                        {{"start" | translate}}
+                    </ion-toggle>
+                </div>
+            </ion-item>
+
+            <ion-item>
+                <button id="log-btn" class="button button-calm button-block"
+                        ng-click="logClick($event)">
+                    Log
+                </button>
+            </ion-item>
+        </ion-list>
+
+    </ion-content>
+</ion-view>
