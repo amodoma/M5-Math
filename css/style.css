@@ -1,0 +1,126 @@
+/* Empty. Add your own CSS if you like */
+
+.eq-dist{
+/*
+The text-align CSS property describes how inline content
+like text is aligned in its parent block element. text-align
+does not control the alignment of block elements itself,
+only their inline content.
+*/
+   text-align: center;
+   margin:0;
+   padding:0;
+ }
+
+.reset-border {
+    border:0;
+}
+
+.reset-pbm{
+    margin:0px;
+    border:0px;
+    padding:0px;
+}
+
+.add-mp-up-dn{
+    margin-top:5px;
+    margin-bottom:5px;
+    padding-top:5px;
+    padding-bottom:5px;
+}
+
+.half-w{
+    width:45%;
+}
+
+#ans-btn-0{
+    margin-right:2px;
+    margin-bottom:2px;
+}
+
+#ans-btn-1{
+    margin-bottom:2px;
+}
+
+#ans-btn-2{
+    margin-right:2px;
+   /* margin-bottom:2px;*/
+}
+
+#ans-btn-3{
+   /* margin-bottom:2px;*/
+}
+
+.sumLg{
+    margin-top:30px;
+    padding-top:30px;
+    margin-bottom:30px;
+    padding-bottom:30px;
+    font-size:12em;
+    text-align:center;
+    color: #11c1f3;
+
+}
+
+.sumSm{
+    margin-top:30px;
+    padding-top:30px;
+    margin-bottom:30px;
+    padding-bottom:30px;
+    font-size:8em;
+    text-align:center;
+    color: #11c1f3;
+
+}
+
+.sumXSm{
+    margin-top:30px;
+    padding-top:30px;
+    margin-bottom:30px;
+    padding-bottom:30px;
+    font-size:4em;
+    text-align:center;
+    color: #11c1f3;
+
+}
+
+.sumXXSm{
+    margin-top:3px;
+    padding-top:3px;
+    margin-bottom:3px;
+    padding-bottom:3px;
+    font-size:1.5em;
+    text-align:center;
+    color: #11c1f3;
+    line-height: 1.4;
+
+}
+
+.reset-lr{
+    margin-left:0px;
+    padding-left:0px;
+    margin-right:0px;
+    padding-right:0px;
+}
+
+.score{
+    margin-top:3px;
+    padding-top:3px;
+    margin-bottom:3px;
+    padding-bottom:3px;
+    font-size:1em;
+    text-align:center;
+    color: #11c1f3;
+}
+
+.color-calm {
+    color: #11c1f3;
+}
+
+.lessonshow {
+    display:block;
+}
+
+.lessonhide {
+    display:none;
+}
