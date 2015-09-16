@@ -36,7 +36,7 @@ angular
 								else
 									throw new Error('Unknown lesson!');
 
-							}
+							};
 
 							$scope.sumSize = function() {
 
@@ -47,16 +47,21 @@ angular
 									sumLg : false
 								};
 
-								if ($rootScope.settings.enableFactors
-										|| $rootScope.settings.enableVib) {
+								var enFac = $rootScope.settings.enableFactors;
+								var enVib = $rootScope.settings.enableVib;
+								var enLcm = $rootScope.settings.enableLcm;
+								var enGcf = $rootScope.settings.enableGcf;
+								var enWma = $rootScope.settings.enableWordMath;
+								var enPnL = $rootScope.settings.enablePandL;
+
+								if (enFac || enVib) {
 									if ($rootScope.maxInt == 9999)
 										size.sumSm = true;
 									else
 										size.sumLg = true;
 								}
 
-								if ($rootScope.settings.enableLcm
-										|| $rootScope.settings.enableGcf) {
+								if (enLcm || enGcf) {
 									if (LcmGcfService.getMax() == 2)
 										size.sumSm = true;
 									else
@@ -64,13 +69,12 @@ angular
 
 								}
 
-								if ($rootScope.settings.enableWordMath
-										|| $rootScope.settings.enablePandL) {
+								if (enWma || enPnL) {
 									size.sumXXSm = true;
 								}
 
 								return size;
-							}
+							};
 						}])
 
 		.controller(
@@ -102,11 +106,12 @@ angular
 								var lang = $scope.M5.lang;
 								uLog('lang = ' + lang);
 								LangSer.setLang(lang);
-								(lang == "mr")
-										? $translate.use('mr')
-										: $translate.use('en');
+								if (lang == "mr")
+									$translate.use('mr');
+								else
+									$translate.use('en');
 
-							}
+							};
 
 							// Need to read this from local storage
 							$scope.M5 = {};
@@ -137,7 +142,7 @@ angular
 									uLog('Promise non-fullfillment');
 								});
 
-							}
+							};
 
 							// Visibility
 							$scope.M5.vis = {
@@ -146,7 +151,7 @@ angular
 								visLcmGcf : true,
 								visWordMath : true,
 								visPandL : true
-							}
+							};
 
 							$rootScope.settings = {
 								enableFactors : false,
@@ -175,17 +180,19 @@ angular
 							$scope.M5.plOpt = $scope.plCategoryOpt[0];
 							$scope.evtPandL = function() {
 								uLog('In evtPandL-' + $scope.M5.plOpt);
-							}
+							};
 
 							$scope.togglePandLEn = function() {
-								var start = $rootScope.settings.enablePandL;
-								uLog('PandL Start toggled -' + start);
-
-								start ? startExec() : stopExec();
+								var enPnL = $rootScope.settings.enablePandL;
+								if (enPnL)
+									startExec();
+								else
+									stopExec();
 
 								function startExec() {
 									PandLService.resetScore();
 									PandLService.start();
+
 									// Hide other lessons
 									M5.routines.hideAll($scope);
 									$scope.M5.vis.visPandL = true;
@@ -200,10 +207,11 @@ angular
 									M5.routines.showAll($scope);
 
 								}
-							}
+							};
 
 							//======================================
 							// Word problem
+							//
 							$scope.wordCategoryOpt = [];
 							M5.routines.getSimpleHardKeys(
 									$scope.wordCategoryOpt, o_xlate);
@@ -222,13 +230,14 @@ angular
 												'Oops..unknown value selected');
 								}
 
-							}
+							};
 
 							$scope.toggleWordMathEn = function() {
-								var start = $rootScope.settings.enableWordMath;
-								uLog('Word Math Start toggled -' + start);
-
-								start ? startExec() : stopExec();
+								var enWma = $rootScope.settings.enableWordMath;
+								if (enWma)
+									startExec();
+								else
+									stopExec();
 
 								function startExec() {
 									WordMathService.start();
@@ -246,7 +255,7 @@ angular
 									M5.routines.showAll($scope);
 
 								}
-							}
+							};
 
 							//======================================
 							// LCM-GCF options
@@ -270,11 +279,11 @@ angular
 												'Oops..unknown value selected');
 								}
 
-							}
+							};
 
 							$scope.evtNumOptChg = function() {
 								self.evtNumOptChg();
-							}
+							};
 
 							self.evtNumOptChg();
 
@@ -283,7 +292,7 @@ angular
 
 								enDisStart(flag);
 								uLog('LCM toggled -' + flag);
-							}
+							};
 
 							$scope.toggleEnGcf = function() {
 								var flag = $rootScope.settings.enableGcf;
@@ -291,13 +300,14 @@ angular
 								enDisStart(flag);
 								uLog('GCF toggled -' + flag);
 
-							}
+							};
 
 							function enDisStart(flag) {
 
-								(flag)
-										? $scope.isDisabled = false
-										: $scope.isDisabled = true;
+								if (flag)
+									$scope.isDisabled = false;
+								else
+									$scope.isDisabled = true;
 
 							}
 
@@ -314,7 +324,7 @@ angular
 									M5.routines.showAll($scope);
 								}
 
-							}
+							};
 
 							//======================================
 							// Vibhajyat options
@@ -342,11 +352,11 @@ angular
 												'Oops..unknown value selected');
 								}
 
-							}
+							};
 
 							$scope.evtVibOptChg = function() {
 								self.evtVibOptChg();
-							}
+							};
 
 							self.evtVibOptChg();
 
@@ -371,7 +381,7 @@ angular
 									VibService.stop();
 									M5.routines.showAll($scope);
 								}
-							}
+							};
 
 							//======================================
 							// Factorisation options
@@ -399,11 +409,11 @@ angular
 												'Oops..unknown value selected');
 								}
 
-							}
+							};
 
 							$scope.evtPfOptChg = function() {
 								self.evtPfOptChg();
-							}
+							};
 
 							self.evtPfOptChg();
 
@@ -437,13 +447,12 @@ angular
 									M5.routines.showAll($scope);
 								}
 
-							}
+							};
 
 							$scope.toggleChoiceFactors = function() {
+								var choiceFac = $scope.settings.choiceFactors;
+								uLog('Choice Fac toggled!' + choiceFac);
 
-								console.log('Choice Factorization toggled!'
-										+ $scope.settings.choiceFactors);
-
-							}
+							};
 
 						}]);

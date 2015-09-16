@@ -10,33 +10,32 @@ angular.module(
 		['ionic', 'pascalprecht.translate', 'starter.controllers',
 				'starter.services'])
 
-.run(
-		function($ionicPlatform, $translate) {
-			$ionicPlatform.ready(function() {
+.run(function($ionicPlatform, $translate) {
+	$ionicPlatform.ready(function() {
 
-				$translate.use("en").then(function(data) {
-					console.log("SUCCESS -> " + data);
-				}, function(error) {
-					console.log("ERROR -> " + error);
-				});
+		$translate.use("en").then(function(data) {
+			console.log("SUCCESS -> " + data);
+		}, function(error) {
+			console.log("ERROR -> " + error);
+		});
 
-				// Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-				// for form inputs)
-				if (window.cordova && window.cordova.plugins
-						&& window.cordova.plugins.Keyboard) {
-					cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-					cordova.plugins.Keyboard.disableScroll(true);
+		// Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
+		// for form inputs)
+		var kb = window.cordova.plugins.Keyboard;
+		if (window.cordova && window.cordova.plugins && kb) {
+			cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+			cordova.plugins.Keyboard.disableScroll(true);
 
-					//navigator.splashscreen.hide();
+			//navigator.splashscreen.hide();
 
-				}
+		}
 
-				if (window.StatusBar) {
-					// org.apache.cordova.statusbar required
-					StatusBar.styleLightContent();
-				}
-			});
-		})
+		if (window.StatusBar) {
+			// org.apache.cordova.statusbar required
+			StatusBar.styleLightContent();
+		}
+	});
+})
 
 .config(function($stateProvider, $urlRouterProvider, $translateProvider) {
 	// Ionic uses AngularUI Router which uses the concept of states
