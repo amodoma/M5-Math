@@ -315,6 +315,7 @@ angular
 								var start = $rootScope.settings.startLcmGcf;
 								uLog('Start LCM-GCF service-' + start);
 								if (start) {
+									LcmGcfService.resetScore();
 									LcmGcfService.start();
 									// Hide other lessons
 									M5.routines.hideAll($scope);
