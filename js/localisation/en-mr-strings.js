@@ -6,6 +6,7 @@ M5.langStrings = function() {
 		return {
 			language : "English",
 			timeout : "वेळ(सेकेंड्स)",
+			var_rep:"Variable representation",
 			p_and_l : "नफा आणि तोटा",
 			start : "सुरवात",
 			wordy : "वाक्य गाणित",
@@ -31,6 +32,7 @@ M5.langStrings = function() {
 		return {
 			language : "मराठी",
 			timeout : "Timeout(Seconds)",
+			var_rep:"Variable representation",
 			p_and_l : "Profit and loss",
 			start : "Start",
 			wordy : "Word Math",

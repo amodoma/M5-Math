@@ -49,6 +49,7 @@ M5.routines = function() {
 		$scope.M5.vis.visWordMath = true;
 		$scope.M5.vis.visVib = true;
 		$scope.M5.vis.visLcmGcf = true;
+		$scope.M5.vis.visVarRep = true;
 	}
 
 	var hideAll = function($scope) {
@@ -58,6 +59,7 @@ M5.routines = function() {
 		$scope.M5.vis.visWordMath = false;
 		$scope.M5.vis.visVib = false;
 		$scope.M5.vis.visLcmGcf = false;
+		$scope.M5.vis.visVarRep = false;
 
 	}
 

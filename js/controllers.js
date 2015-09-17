@@ -8,31 +8,36 @@ angular
 				[
 						'$scope',
 						'$rootScope',
-						'FactorsService',
-						'VibService',
-						'LcmGcfService',
-						'WordMathService',
-						'PandLService',
-						function($scope, $rootScope, FactorsService,
-								VibService, LcmGcfService, WordMathService,
-								PandLService) {
+						'FactorsSer',
+						'VibSer',
+						'LcmGcfSer',
+						'WordMathSer',
+						'PandLSer',
+						'ScoreSer',
+						'TimerSer',
+						function($scope, $rootScope, FactorsSer,
+								VibSer, LcmGcfSer, WordMathSer,
+								PandLSer, ScoreSer, TimerSer) {
 							console.log('In MathCtrl');
 
 							$scope.ansClick = function(i) {
+
+								ScoreSer.ansClick(i);
+								TimerSer.stop();
 								if ($rootScope.settings.enableFactors)
-									FactorsService.ansClick(i);
+									FactorsSer.start();
 								else if ($rootScope.settings.enableVib)
-									VibService.ansClick(i);
+									VibSer.start();
 								else if ($rootScope.settings.enableGcf)
-									LcmGcfService.ansClick(i);
+									LcmGcfSer.start();
 								else if ($rootScope.settings.enableLcm)
-									LcmGcfService.ansClick(i);
+									LcmGcfSer.start();
 								else if ($rootScope.settings.enableLcm)
-									LcmGcfService.ansClick(i);
+									LcmGcfSer.start();
 								else if ($rootScope.settings.enableWordMath)
-									WordMathService.ansClick(i);
+									WordMathSer.start();
 								else if ($rootScope.settings.enablePandL)
-									PandLService.ansClick(i);
+									PandLSer.start();
 								else
 									throw new Error('Unknown lesson!');
 
@@ -62,7 +67,7 @@ angular
 								}
 
 								if (enLcm || enGcf) {
-									if (LcmGcfService.getMax() == 2)
+									if (LcmGcfSer.getMax() == 2)
 										size.sumSm = true;
 									else
 										size.sumXSm = true;
@@ -83,19 +88,22 @@ angular
 						'$scope',
 						'$rootScope',
 						'$translate',
-						'FactorsService',
-						'VibService',
-						'LcmGcfService',
-						'WordMathService',
-						'LogService',
+						'FactorsSer',
+						'VibSer',
+						'LcmGcfSer',
+						'WordMathSer',
+						'LogSer',
 						'$ionicPopover',
 						'$ionicScrollDelegate',
-						'PandLService',
+						'PandLSer',
 						'LangSer',
+						'TimerSer',
+						'ScoreSer',
 						function($scope, $rootScope, $translate,
-								FactorsService, VibService, LcmGcfService,
-								WordMathService, LogService, $ionicPopover,
-								$ionicScrollDelegate, PandLService, LangSer) {
+								FactorsSer, VibSer, LcmGcfSer,
+								WordMathSer, LogSer, $ionicPopover,
+								$ionicScrollDelegate, PandLSer, LangSer,
+								TimerSer, ScoreSer) {
 							var self = this;
 
 							//======================================
@@ -126,9 +134,9 @@ angular
 							};
 
 							// Send scope to bind with data logger
-							LogService.init($scope);
+							LogSer.bindDataLogger($scope);
 							$scope.logClick = function($event) {
-								var s = LogService.get().toString();
+								var s = LogSer.get().toString();
 								uLog(s);
 								//$scope.logErr = LogService.get().toString();
 
@@ -150,7 +158,8 @@ angular
 								visVib : true,
 								visLcmGcf : true,
 								visWordMath : true,
-								visPandL : true
+								visPandL : true,
+								visVarRep : true
 							};
 
 							$rootScope.settings = {
@@ -161,8 +170,53 @@ angular
 								enableGcf : false,
 								enableWordMath : false,
 								enablePandL : false,
+								enableVarRep : false,
 								choiceFactors : "Three",
 								timeExpiry : 60 * 5
+							};
+
+							//======================================
+							// Variable representation  problem
+							//
+							$scope.M5.vis.visVarRep = true;
+							var o_xlate = M5.langStrings.getEnXlation();
+
+							// Get keys which are used in marathi translation
+							$scope.varRepCategoryOpt = [];
+							M5.routines.getSimpleHardKeys(
+									$scope.varRepCategoryOpt, o_xlate);
+
+							//$scope.varRepCategoryOpt = ["simple", "hard"];
+							$scope.M5.varRepOpt = $scope.varRepCategoryOpt[0];
+							$scope.evtVarRep = function() {
+								uLog('In evtVarRep-' + $scope.M5.varRepOpt);
+							};
+
+							$scope.toggleVarRepEn = function() {
+								var enVarRep = $rootScope.settings.enableVarRep;
+								if (enVarRep)
+									startExec();
+								else
+									stopExec();
+
+								function startExec() {
+									VarRepService.resetScore();
+									VarRepService.start();
+
+									// Hide other lessons
+									M5.routines.hideAll($scope);
+									$scope.M5.vis.visVarRep = true;
+
+									// Insurance, in case user had clicked on LCM-GCF and started a different lesson
+									VarRepService.resetEnables($scope);
+								}
+
+								function stopExec() {
+									uLog('In stopExec');
+									VarRepService.stop();
+									M5.routines.showAll($scope);
+
+								}
 							};
 
 							//======================================
@@ -190,20 +244,21 @@ angular
 									stopExec();
 
 								function startExec() {
-									PandLService.resetScore();
-									PandLService.start();
+									ScoreSer.reset();
+									ScoreSer.update();
+									PandLSer.start();
 
 									// Hide other lessons
 									M5.routines.hideAll($scope);
 									$scope.M5.vis.visPandL = true;
 
 									// Insurance, in case user had clicked on LCM-GCF and started a different lesson
-									LcmGcfService.resetEnables($scope);
+									LcmGcfSer.resetEnables($scope);
 								}
 
 								function stopExec() {
 									uLog('In stopExec');
-									PandLService.stop();
+									TimerSer.stop();
 									M5.routines.showAll($scope);
 
 								}
@@ -240,18 +295,21 @@ angular
 									stopExec();
 
 								function startExec() {
-									WordMathService.start();
+									ScoreSer.reset();
+									ScoreSer.update();
+									WordMathSer.start();
+
 									// Hide other lessons
 									M5.routines.hideAll($scope);
 									$scope.M5.vis.visWordMath = true;
 
 									// Insurance, in case user had clicked on LCM-GCF and started a different lesson
-									LcmGcfService.resetEnables($scope);
+									LcmGcfSer.resetEnables($scope);
 								}
 
 								function stopExec() {
 
-									WordMathService.stop();
+									TimerSer.stop();
 									M5.routines.showAll($scope);
 
 								}
@@ -268,11 +326,11 @@ angular
 								switch ($scope.M5.numOpt) {
 									case "two_num" :
 										$rootScope.quantityLcmGcf = 2;
-										LcmGcfService.max(2);
+										LcmGcfSer.max(2);
 										break;
 									case "three_num" :
 										$rootScope.quantityLcmGcf = 3;
-										LcmGcfService.max(3);
+										LcmGcfSer.max(3);
 										break;
 									default :
 										throw new Error(
@@ -315,13 +373,14 @@ angular
 								var start = $rootScope.settings.startLcmGcf;
 								uLog('Start LCM-GCF service-' + start);
 								if (start) {
-									LcmGcfService.resetScore();
-									LcmGcfService.start();
+									ScoreSer.reset();
+									ScoreSer.update();
+									LcmGcfSer.start();
 									// Hide other lessons
 									M5.routines.hideAll($scope);
 									$scope.M5.vis.visLcmGcf = true;
 								} else {
-									LcmGcfService.stop();
+									TimerSer.stop();
 									M5.routines.showAll($scope);
 								}
 
@@ -338,15 +397,15 @@ angular
 								switch ($scope.M5.vibOpt) {
 									case "two_dig" :
 										$rootScope.maxInt = 99;
-										VibService.max(99);
+										VibSer.max(99);
 										break;
 									case "three_dig" :
 										$rootScope.maxInt = 999;
-										VibService.max(999);
+										VibSer.max(999);
 										break;
 									case "four_dig" :
 										$rootScope.maxInt = 9999;
-										VibService.max(9999);
+										VibSer.max(9999);
 										break;
 									default :
 										throw new Error(
@@ -367,19 +426,20 @@ angular
 								// Start/stop new problem
 
 								if (enSwitch) {
-									VibService.resetScore();
-									VibService.start(true);
+									ScoreSer.reset();
+									ScoreSer.update();
+									VibSer.start();
 									// Hide other lessons
 									M5.routines.hideAll($scope);
 
 									// Insurance, in case user had clicked on LCM-GCF and started a different lesson
-									LcmGcfService.resetEnables($scope);
+									LcmGcfSer.resetEnables($scope);
 
 									$scope.M5.vis.visVib = true;
 									$ionicScrollDelegate.$getByHandle(
 											'mainScroll').scrollTop();
 								} else {
-									VibService.stop();
+									TimerSer.stop();
 									M5.routines.showAll($scope);
 								}
 							};
@@ -395,15 +455,15 @@ angular
 								switch ($scope.M5.vibOpt) {
 									case "two_dig" :
 										$rootScope.maxInt = 99;
-										FactorsService.max(99);
+										FactorsSer.max(99);
 										break;
 									case "three_dig" :
 										$rootScope.maxInt = 99;
-										FactorsService.max(999);
+										FactorsSer.max(999);
 										break;
 									case "four_dig" :
 										$rootScope.maxInt = 9999;
-										FactorsService.max(9999);
+										FactorsSer.max(9999);
 										break;
 									default :
 										throw new Error(
@@ -427,14 +487,15 @@ angular
 								uLog('timeout=' + timeOut);
 
 								if (enSwitch) {
-									FactorsService.resetScore();
-									FactorsService.start(true);
+									ScoreSer.reset();
+									ScoreSer.update();
+									FactorsSer.start(true);
 
 									// Hide other lessons
 									M5.routines.hideAll($scope);
 
 									// Insurance, in case user had clicked on LCM-GCF and started a different lesson
-									LcmGcfService.resetEnables($scope);
+									LcmGcfSer.resetEnables($scope);
 									$scope.M5.vis.visFactors = true;
 
 									// Without this, the screen would look blank,
@@ -443,7 +504,7 @@ angular
 									$ionicScrollDelegate.$getByHandle(
 											'mainScroll').scrollTop();
 								} else {
-									FactorsService.stop();
+									TimerSer.stop();
 									// Show other lessons
 									M5.routines.showAll($scope);
 								}
