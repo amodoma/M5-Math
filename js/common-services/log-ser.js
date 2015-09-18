@@ -17,20 +17,25 @@ M5Services.factory('LogSer', [function() {
 
 	function bindDataLogger($scope) {
 
-		$scope.logErr = dataLogger;
+		$scope.M5.logErr = dataLogger;
 
 	}
 
-    // Parameter passed in is the one user clicked
+	// Parameter passed in is the one user clicked
 	function log(i) {
 		var s = sum + '(' + right + ',' + wrong[i] + ')';
 		dataLogger.push(s);
+	}
+
+	function reset() {
+		dataLogger = [];
 	}
 
 	return {
 		bindDataLogger : bindDataLogger,
 		init : init,
 		log : log,
+		reset : reset,
 		get : function() {
 			return dataLogger
 		}

@@ -21,14 +21,16 @@
 
             <!--Var rep math-->
 
-            <!--<ion-item ng-class="getVisClass(M5.vis.visVarRep)">
+            <ion-item ng-class="getVisClass(M5.vis.visVarRep)">
                 <div class="reset-pbm">
                     <label class="item item-input item-select">
                         <div class="input-label">
                             {{"var_rep" | translate}}
                         </div>
                         <select ng-model="M5.varRepOpt" ng-change="evtVarRep()">
-                            <option ng-repeat="item in varRepCategoryOpt" value="{{item}}">{{item | translate}}</option>
+                            <option ng-repeat="item in varRepCategoryOpt" value="{{item}}">{{item |
+                                translate}}
+                            </option>
                         </select>
                     </label>
                 </div>
@@ -37,7 +39,7 @@
                         {{"start" | translate}}
                     </ion-toggle>
                 </div>
-            </ion-item>-->
+            </ion-item>
 
             <!--PandL math-->
 
@@ -48,7 +50,9 @@
                             {{"p_and_l" | translate}}
                         </div>
                         <select ng-model="M5.plOpt" ng-change="evtPandL()">
-                            <option ng-repeat="item in plCategoryOpt" value="{{item}}">{{item | translate}}</option>
+                            <option ng-repeat="item in plCategoryOpt" value="{{item}}">{{item |
+                                translate}}
+                            </option>
                         </select>
                     </label>
                 </div>
@@ -68,7 +72,9 @@
                             {{"wordy" | translate}}
                         </div>
                         <select ng-model="M5.wordOpt" ng-change="evtWordCategory()">
-                            <option ng-repeat="item in wordCategoryOpt" value="{{item}}">{{item | translate}}</option>
+                            <option ng-repeat="item in wordCategoryOpt" value="{{item}}">{{item |
+                                translate}}
+                            </option>
                         </select>
                     </label>
                 </div>
@@ -98,12 +104,15 @@
                             {{"quan" | translate}}
                         </div>
                         <select ng-model="M5.numOpt" ng-change="evtNumOptChg()">
-                            <option ng-repeat="item in numCategoryOpt" value="{{item}}">{{item | translate}}</option>
+                            <option ng-repeat="item in numCategoryOpt" value="{{item}}">{{item |
+                                translate}}
+                            </option>
                         </select>
                     </label>
                 </div>
                 <div class="reset-pbm">
-                    <ion-toggle ng-model="settings.startLcmGcf" ng-disabled="isDisabled" ng-change="toggleStartLcmGcf()">
+                    <ion-toggle ng-model="settings.startLcmGcf" ng-disabled="isDisabled"
+                                ng-change="toggleStartLcmGcf()">
                         {{"start" | translate}}
                     </ion-toggle>
                 </div>
@@ -118,7 +127,9 @@
                             {{"full_divide" | translate}}
                         </div>
                         <select ng-model="M5.vibOpt" ng-change="evtVibOptChg()">
-                            <option ng-repeat="item in vibCategoryOpt" value="{{item}}">{{item | translate}}</option>
+                            <option ng-repeat="item in vibCategoryOpt" value="{{item}}">{{item |
+                                translate}}
+                            </option>
                         </select>
                     </label>
                 </div>
@@ -137,7 +148,9 @@
                             {{"prime_factors" | translate}}
                         </div>
                         <select ng-model="M5.pfOpt" ng-change="evtPfOptChg()">
-                            <option ng-repeat="item in pfCategoryOpt" value="{{item}}">{{item | translate}}</option>
+                            <option ng-repeat="item in pfCategoryOpt" value="{{item}}">{{item |
+                                translate}}
+                            </option>
                         </select>
                     </label>
                 </div>

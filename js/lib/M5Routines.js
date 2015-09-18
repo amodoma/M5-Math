@@ -17,8 +17,12 @@ M5.routines = function() {
 
 	var getSimpleHardKeys = function(ary, obj) {
 		for ( var prop in obj) {
-			if (obj[prop] == "Simple" || obj[prop] == "Hard") {
-				ary.push(prop);
+			if (obj[prop] == "Simple") {
+				ary[0] = prop;
+			}
+
+			if (obj[prop] == "Hard") {
+				ary[1] = prop;
 			}
 		}
 

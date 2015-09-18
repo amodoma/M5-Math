@@ -15,9 +15,10 @@ angular
 						'PandLSer',
 						'ScoreSer',
 						'TimerSer',
-						function($scope, $rootScope, FactorsSer,
-								VibSer, LcmGcfSer, WordMathSer,
-								PandLSer, ScoreSer, TimerSer) {
+						'VarRepSer',
+						function($scope, $rootScope, FactorsSer, VibSer,
+								LcmGcfSer, WordMathSer, PandLSer, ScoreSer,
+								TimerSer, VarRepSer) {
 							console.log('In MathCtrl');
 
 							$scope.ansClick = function(i) {
@@ -38,6 +39,8 @@ angular
 									WordMathSer.start();
 								else if ($rootScope.settings.enablePandL)
 									PandLSer.start();
+								else if ($rootScope.settings.enableVarRep)
+									VarRepSer.start();
 								else
 									throw new Error('Unknown lesson!');
 
@@ -58,6 +61,7 @@ angular
 								var enGcf = $rootScope.settings.enableGcf;
 								var enWma = $rootScope.settings.enableWordMath;
 								var enPnL = $rootScope.settings.enablePandL;
+								var enVarRep = $rootScope.settings.enableVarRep;
 
 								if (enFac || enVib) {
 									if ($rootScope.maxInt == 9999)
@@ -78,6 +82,8 @@ angular
 									size.sumXXSm = true;
 								}
 
+								if (enVarRep)
+									size.sumXXSm = true;
 								return size;
 							};
 						}])
@@ -99,15 +105,29 @@ angular
 						'LangSer',
 						'TimerSer',
 						'ScoreSer',
-						function($scope, $rootScope, $translate,
-								FactorsSer, VibSer, LcmGcfSer,
-								WordMathSer, LogSer, $ionicPopover,
-								$ionicScrollDelegate, PandLSer, LangSer,
-								TimerSer, ScoreSer) {
+						'VarRepSer',
+						function($scope, $rootScope, $translate, FactorsSer,
+								VibSer, LcmGcfSer, WordMathSer, LogSer,
+								$ionicPopover, $ionicScrollDelegate, PandLSer,
+								LangSer, TimerSer, ScoreSer, VarRepSer) {
 							var self = this;
 
 							//======================================
 							// Common
+
+							// Invoked just before lesson begin
+							var resetScoreLog = function() {
+								LogSer.reset();
+
+								// Send scope to bind with data logger.
+								// Need this bind after every reset. Unsure why.
+								// Maybe Angular caches,gotcha or my poor understanding.
+								// Used to be outside this routine.
+								//
+								LogSer.bindDataLogger($scope);
+								ScoreSer.reset();
+								ScoreSer.update();
+							}
 
 							// Language selection
 							$scope.toggleLang = function() {
@@ -133,12 +153,9 @@ angular
 
 							};
 
-							// Send scope to bind with data logger
-							LogSer.bindDataLogger($scope);
 							$scope.logClick = function($event) {
 								var s = LogSer.get().toString();
-								uLog(s);
-								//$scope.logErr = LogService.get().toString();
+								uLog('Log=' + s);
 
 								$ionicPopover.fromTemplateUrl(
 										'templates/log-popover.html', {
@@ -187,10 +204,26 @@ angular
 									$scope.varRepCategoryOpt, o_xlate);
 
 							//$scope.varRepCategoryOpt = ["simple", "hard"];
-							$scope.M5.varRepOpt = $scope.varRepCategoryOpt[0];
 							$scope.evtVarRep = function() {
-								uLog('In evtVarRep-' + $scope.M5.varRepOpt);
+
+								switch ($scope.M5.varRepOpt) {
+									case "simple" :
+										uLog('Simple');
+										VarRepSer.hard(false);
+										break;
+									case "hard" :
+										uLog('Hard');
+										VarRepSer.hard(true);
+										break;
+									default :
+										throw new Error(
+												'Oops..unknown value selected');
+								}
+
 							};
+
+							$scope.M5.varRepOpt = $scope.varRepCategoryOpt[0];
+							$scope.evtVarRep();
 
 							$scope.toggleVarRepEn = function() {
 								var enVarRep = $rootScope.settings.enableVarRep;
@@ -200,20 +233,19 @@ angular
 									stopExec();
 
 								function startExec() {
-									VarRepService.resetScore();
-									VarRepService.start();
+									resetScoreLog();
+									VarRepSer.start();
 
 									// Hide other lessons
 									M5.routines.hideAll($scope);
 									$scope.M5.vis.visVarRep = true;
 
 									// Insurance, in case user had clicked on LCM-GCF and started a different lesson
-									VarRepService.resetEnables($scope);
+									LcmGcfSer.resetEnables($scope);
 								}
 
 								function stopExec() {
-									uLog('In stopExec');
-									VarRepService.stop();
+									TimerSer.stop();
 									M5.routines.showAll($scope);
 
 								}
@@ -244,8 +276,7 @@ angular
 									stopExec();
 
 								function startExec() {
-									ScoreSer.reset();
-									ScoreSer.update();
+									resetScoreLog();
 									PandLSer.start();
 
 									// Hide other lessons
@@ -295,8 +326,7 @@ angular
 									stopExec();
 
 								function startExec() {
-									ScoreSer.reset();
-									ScoreSer.update();
+									resetScoreLog();
 									WordMathSer.start();
 
 									// Hide other lessons
@@ -308,10 +338,8 @@ angular
 								}
 
 								function stopExec() {
-
 									TimerSer.stop();
 									M5.routines.showAll($scope);
-
 								}
 							};
 
@@ -373,8 +401,7 @@ angular
 								var start = $rootScope.settings.startLcmGcf;
 								uLog('Start LCM-GCF service-' + start);
 								if (start) {
-									ScoreSer.reset();
-									ScoreSer.update();
+									resetScoreLog();
 									LcmGcfSer.start();
 									// Hide other lessons
 									M5.routines.hideAll($scope);
@@ -426,8 +453,7 @@ angular
 								// Start/stop new problem
 
 								if (enSwitch) {
-									ScoreSer.reset();
-									ScoreSer.update();
+									resetScoreLog();
 									VibSer.start();
 									// Hide other lessons
 									M5.routines.hideAll($scope);
@@ -487,8 +513,7 @@ angular
 								uLog('timeout=' + timeOut);
 
 								if (enSwitch) {
-									ScoreSer.reset();
-									ScoreSer.update();
+									resetScoreLog();
 									FactorsSer.start(true);
 
 									// Hide other lessons

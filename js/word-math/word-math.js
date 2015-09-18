@@ -11,8 +11,9 @@ M5.wordMath = function() {
 	var sums = [];
 	var op = ['+', '-', 'x', '/'];
 	var names = ['Deep', 'Suraj', 'Aparna', 'Nandita', 'Sheetal', 'Roshni',
-			'Ankushi', 'Karshima','Tushar','Sushmita'];
-	var things = ['marbles', 'kites', 'balls', 'pens','books','sweets','pencils'];
+			'Ankushi', 'Karshima', 'Tushar', 'Sushmita'];
+	var things = ['marbles', 'kites', 'balls', 'pens', 'books', 'sweets',
+			'pencils'];
 	var correctAns = -1;
 
 	//Public
