@@ -54,6 +54,8 @@ M5.routines = function() {
 		$scope.M5.vis.visVib = true;
 		$scope.M5.vis.visLcmGcf = true;
 		$scope.M5.vis.visVarRep = true;
+		$scope.M5.vis.visVarEqn = true;
+		$scope.M5.vis.visFraDec = true;
 	}
 
 	var hideAll = function($scope) {
@@ -64,6 +66,8 @@ M5.routines = function() {
 		$scope.M5.vis.visVib = false;
 		$scope.M5.vis.visLcmGcf = false;
 		$scope.M5.vis.visVarRep = false;
+		$scope.M5.vis.visVarEqn = false;
+		$scope.M5.vis.visFraDec = false;
 
 	}
 
@@ -81,6 +85,28 @@ M5.routines = function() {
 		return t
 	}
 
+	function testPromise() {
+		var p = Promise.resolve(21);
+
+		p.then(function(v) {
+			console.log(v); //	21
+			//	create	a	promise	to	return
+			return new Promise(function(resolve, reject) {
+				//	introduce	asynchrony!
+				setTimeout(function() {
+					//	fulfill	with	value	`42`
+					resolve(v * 2);
+				}, 5000);
+			});
+		}).then(function(v) {
+			//	runs	after	the	5s	delay	in	the	previous	step
+			console.log(v); //	42
+		});
+
+		uLog('Exiting testPromise');
+
+	}
+
 	var oPublic = {
 		getSimpleHardKeys : getSimpleHardKeys,
 		getDigitsKeys : getDigitsKeys,
@@ -88,7 +114,8 @@ M5.routines = function() {
 		showAll : showAll,
 		hideAll : hideAll,
 		getNameSex : getNameSex,
-		getThing : getThing
+		getThing : getThing,
+		testPromise : testPromise
 	}
 
 	return oPublic;

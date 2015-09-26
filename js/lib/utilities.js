@@ -92,14 +92,14 @@ function uGetRandomInt(min, max) {
 }
 
 function uGetRandomEvenInt(min, max) {
-	var num=1;
+	var num = 1;
 
-	while(num %2 != 0)
+	while (num % 2 != 0)
 		calc();
 
 	return num;
 	function calc() {
-		 num = parseInt(Math.floor(Math.random() * (max - min + 1) + min));
+		num = parseInt(Math.floor(Math.random() * (max - min + 1) + min));
 	}
 
 }
@@ -124,4 +124,16 @@ function pronouncedClick($ele) {
 			timer = 0;
 		}, 250);
 	}
+}
+
+function uDumpCssProp(eleId) {
+	var style = window.getComputedStyle(eleId, null);
+	var len = style.length;
+	uLog('Style  = ' + style.toString());
+	var i;
+	for (i = 0; i < len; i += 1) {
+		var p = style.item(i);
+		uLog("   Property- " + p + " : " + style.getPropertyValue(p) + "\n");
+	}
+
 }

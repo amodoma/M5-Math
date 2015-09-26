@@ -6,8 +6,13 @@ M5.langStrings = function() {
 		return {
 			language : "English",
 			timeout : "वेळ(सेकेंड्स)",
-			var_rep:"Variable representation",
+			var_rep : "चल शिकण",
+			var_eqn : "चल समीकरण",
 			p_and_l : "नफा आणि तोटा",
+			buy : "घेतले",
+			sell : "विकले",
+			profit : "नफा",
+			loss : "तोटा",
 			start : "सुरवात",
 			wordy : "वाक्य गाणित",
 			lcm : "लसावी",
@@ -24,16 +29,27 @@ M5.langStrings = function() {
 			three_num : "तीन आकडी",
 			math : "गाणित",
 			settings : "सेटिंग्ज",
-			math_5 :"गाणित-इयत्ता पाचवी "
-			}
+			math_5 : "गाणित-इयत्ता पाचवी ",
+			fraadd : "अपूर्णांक बेरीज",
+			framul : "अपूर्णांक गुणाकार",
+			decadd : "दशांश बेरीज",
+			decmul : "दशांश गुणाकार",
+			fra2dec : "अपूर्णांक ते दशांश",
+			dec2fra : "दशांश ते अपूर्णांक"
+		}
 	}
 
 	var getEnXlation = function() {
 		return {
 			language : "मराठी",
 			timeout : "Timeout(Seconds)",
-			var_rep:"Variable representation",
+			var_rep : "Variable representation",
+			var_eqn : "Variable equations",
 			p_and_l : "Profit and loss",
+			buy : "Buy",
+			sell : "Sell",
+			profit : "Profit",
+			loss : "Loss",
 			start : "Start",
 			wordy : "Word Math",
 			lcm : "LCM",
@@ -50,7 +66,13 @@ M5.langStrings = function() {
 			three_num : "Three numbers",
 			math : "Math",
 			settings : "Settings",
-			math_5:"Math-5th grade"
+			math_5 : "Math-5th grade",
+			fraadd : "Fractions add",
+			framul : "Fractions multiply",
+			decadd : "Decimal add",
+			decmul : "Decimal multiply",
+			fra2dec : "Fractions to decimal",
+			dec2fra : "Decimal to fraction"
 		}
 	}
 	var oPublic = {

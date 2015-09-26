@@ -19,6 +19,81 @@
             </ion-item>
 
 
+            <!--Fraction - Decimals -->
+
+            <ion-item ng-class="getVisClass(M5.vis.visFraDec)">
+                <div class="reset-pbm">
+                    <ion-toggle ng-model="settings.enFraAdd"
+                                ng-change="toggleFraSubLesson(settings.enFraAdd)"
+                                ng-disabled="isDisFraAdd">
+                        {{"fraadd" | translate}}
+                    </ion-toggle>
+                </div>
+                <div class="reset-pbm">
+                    <ion-toggle ng-model="settings.enFraMul"
+                                ng-change="toggleFraSubLesson(settings.enFraMul)"
+                                ng-disabled="isDisFraMul">
+                        {{"framul" | translate}}
+                    </ion-toggle>
+                </div>
+                <div class="reset-pbm">
+                    <ion-toggle ng-model="settings.enDecAdd"
+                                ng-change="toggleFraSubLesson(settings.enDecAdd)"
+                                ng-disabled="isDisDecAdd">
+                        {{"decadd" | translate}}
+                    </ion-toggle>
+                </div>
+                <div class="reset-pbm">
+                    <ion-toggle ng-model="settings.enDecMul"
+                                ng-change="toggleFraSubLesson(settings.enDecMul)"
+                                ng-disabled="isDisDecMul">
+                        {{"decmul" | translate}}
+                    </ion-toggle>
+                </div>
+                <div class="reset-pbm">
+                    <ion-toggle ng-model="settings.enFra2Dec"
+                                ng-change="toggleFraSubLesson(settings.enFra2Dec)"
+                                ng-disabled="isDisFra2Dec">
+                        {{"fra2dec" | translate}}
+                    </ion-toggle>
+                </div>
+                <div class="reset-pbm">
+                    <ion-toggle ng-model="settings.enDec2Fra"
+                                ng-change="toggleFraSubLesson(settings.enDec2Fra)"
+                                ng-disabled="isDisDec2Fra">
+                        {{"dec2fra" | translate}}
+                    </ion-toggle>
+                </div>
+                <div class="reset-pbm">
+                    <ion-toggle ng-model="settings.startFraDec" ng-disabled="isDisabledFraDec"
+                                ng-change="toggleStartFraDec()">
+                        {{"start" | translate}}
+                    </ion-toggle>
+                </div>
+            </ion-item>
+
+            <!--Var eqn math-->
+
+            <ion-item ng-class="getVisClass(M5.vis.visVarEqn)">
+                <div class="reset-pbm">
+                    <label class="item item-input item-select">
+                        <div class="input-label">
+                            {{"var_eqn" | translate}}
+                        </div>
+                        <select ng-model="M5.varEqnOpt" ng-change="evtVarEqn()">
+                            <option ng-repeat="item in varEqnCategoryOpt" value="{{item}}">{{item |
+                                translate}}
+                            </option>
+                        </select>
+                    </label>
+                </div>
+                <div class="reset-pbm">
+                    <ion-toggle ng-model="settings.enableVarEqn" ng-change="toggleVarEqnEn()">
+                        {{"start" | translate}}
+                    </ion-toggle>
+                </div>
+            </ion-item>
+
             <!--Var rep math-->
 
             <ion-item ng-class="getVisClass(M5.vis.visVarRep)">

@@ -16,8 +16,8 @@ M5Services.factory('LogSer', [function() {
 	}
 
 	function bindDataLogger($scope) {
-
-		$scope.M5.logErr = dataLogger;
+		if (typeof $scope.M5.logErr === "undefined")
+			$scope.M5.logErr = dataLogger;
 
 	}
 
@@ -27,8 +27,13 @@ M5Services.factory('LogSer', [function() {
 		dataLogger.push(s);
 	}
 
+	// Only array modification, and not creation. This will ensure that $scope.logErr
+	// and dataLogger point to the same values. Modification, like dataLogger = []
+	// will make them point to different values, as references behave differently
+	// in Javascript compared to other languages. See Kyle Simpson pdf on this
+	//
 	function reset() {
-		dataLogger = [];
+		dataLogger.length = 0;
 	}
 
 	return {

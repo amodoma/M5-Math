@@ -14,6 +14,7 @@ M5.varrep = function() {
 			['years', 'older', 'younger', 'age']];
 	var mSelOp;
 	var mFlagHard = false;
+	var correctAns;
 
 	// Public
 	function compute(flagHard) {
@@ -38,10 +39,33 @@ M5.varrep = function() {
 		var smartAns = [];
 
 		if (mFlagHard) {
-			smartAns = [correctAns + uGetRandomInt(1, 19),
-					correctAns - uGetRandomInt(1, correctAns),
-					correctAns + uGetRandomInt(1, 19),
-					correctAns - uGetRandomInt(1, correctAns)];
+			switch (mSelOp) {
+				case op[0] :
+					smartAns = [rNumNxt + rNum,
+							correctAns - uGetRandomInt(1, correctAns),
+							correctAns + uGetRandomInt(1, 19), rNumNxt + rNum];
+					break;
+				case op[1] :
+					smartAns = [correctAns + uGetRandomInt(1, 19),
+							correctAns - uGetRandomInt(1, correctAns),
+							rNumNxt - rNum, correctAns + uGetRandomInt(1, 19)];
+					break;
+				case op[2] :
+					smartAns = [correctAns + uGetRandomInt(1, 19),
+							correctAns - uGetRandomInt(1, correctAns),
+							rNumNxt * rNum,
+							correctAns - uGetRandomInt(1, correctAns)];
+					break;
+				case op[3] :
+					smartAns = [correctAns + uGetRandomInt(1, 19),
+							correctAns - uGetRandomInt(1, correctAns),
+							rNumNxt / rNum,
+							correctAns - uGetRandomInt(1, correctAns)];
+					break;
+				default :
+					throw new Error('Unknown op selected:mSelOp=' + mSelOp);
+					break;
+			}
 		} else {
 			switch (mSelOp) {
 				case op[0] :
@@ -105,7 +129,7 @@ M5.varrep = function() {
 		sum += rNames[0];
 		rNum = uGetRandomInt(1, 19);
 		var randAttr = phyAttr[uGetRandomInt(1, phyAttr.length - 1)];
-		sum += 'is ' + rNum + ' ' + randAttr[0] + ' ' + randAttr[1] + ' than ';
+		sum += ' is ' + rNum + ' ' + randAttr[0] + ' ' + randAttr[1] + ' than ';
 		sum += rNames[1];
 
 		correctAns = 'x + ' + rNum;
@@ -116,7 +140,7 @@ M5.varrep = function() {
 		sum += rNames[0];
 		rNum = uGetRandomInt(1, 19);
 		var randAttr = phyAttr[uGetRandomInt(1, phyAttr.length - 1)];
-		sum += 'is ' + rNum + ' ' + randAttr[0] + ' ' + randAttr[2] + ' than ';
+		sum += ' is ' + rNum + ' ' + randAttr[0] + ' ' + randAttr[2] + ' than ';
 		sum += rNames[1];
 
 		correctAns = 'n - ' + rNum;
@@ -127,7 +151,7 @@ M5.varrep = function() {
 		sum += rNames[0];
 		rNum = uGetRandomInt(1, 19);
 		var randAttr = phyAttr[uGetRandomInt(1, phyAttr.length - 1)];
-		sum += 'is ' + rNum + ' times ' + randAttr[1] + ' than ';
+		sum += ' is ' + rNum + ' times ' + randAttr[1] + ' than ';
 		sum += rNames[1];
 
 		correctAns = rNum + ' x q';
@@ -138,7 +162,7 @@ M5.varrep = function() {
 		sum += rNames[0];
 		rNum = uGetRandomInt(1, 19);
 		var randAttr = phyAttr[uGetRandomInt(1, phyAttr.length - 1)];
-		sum += 'is 1/' + rNum + ' times ' + randAttr[1] + ' than ';
+		sum += ' is 1/' + rNum + ' times ' + randAttr[1] + ' than ';
 		sum += rNames[1];
 
 		correctAns = ' r /' + rNum;
@@ -185,11 +209,11 @@ M5.varrep = function() {
 		rNum = uGetRandomInt(1, 19);
 		rNumNxt = uGetRandomInt(rNum, 50);
 		var randAttr = phyAttr[attrIndex];
-		sum += 'is ' + rNum + ' ' + randAttr[0] + ' ' + randAttr[1] + ' than ';
+		sum += ' is ' + rNum + ' ' + randAttr[0] + ' ' + randAttr[1] + ' than ';
 		sum += rNames[1];
 		sum += '. ' + rNames[0] + '\'s ' + phyAttr[attrIndex][3] + ' is '
-				+ rNumNxt + phyAttr[attrIndex][0] + '.';
-		sum += 'What is ' + rNames[0] + '\'s ' + phyAttr[attrIndex][3] + ' ?';
+				+ rNumNxt + ' ' + phyAttr[attrIndex][0] + '.';
+		sum += 'What is ' + rNames[1] + '\'s ' + phyAttr[attrIndex][3] + ' ?';
 
 		correctAns = rNumNxt - rNum;
 
@@ -203,11 +227,11 @@ M5.varrep = function() {
 		rNum = uGetRandomInt(1, 19);
 		rNumNxt = uGetRandomInt(rNum, 50);
 		var randAttr = phyAttr[attrIndex];
-		sum += 'is ' + rNum + ' ' + randAttr[0] + ' ' + randAttr[2] + ' than ';
+		sum += ' is ' + rNum + ' ' + randAttr[0] + ' ' + randAttr[2] + ' than ';
 		sum += rNames[1];
 		sum += '. ' + rNames[0] + '\'s ' + phyAttr[attrIndex][3] + ' is '
-				+ rNumNxt + phyAttr[attrIndex][0] + '.';
-		sum += 'What is ' + rNames[0] + '\'s ' + phyAttr[attrIndex][3] + ' ?';
+				+ rNumNxt + ' ' + phyAttr[attrIndex][0] + '.';
+		sum += 'What is ' + rNames[1] + '\'s ' + phyAttr[attrIndex][3] + ' ?';
 		correctAns = rNumNxt + rNum;
 
 	}
@@ -220,12 +244,12 @@ M5.varrep = function() {
 		rNum = uGetRandomInt(1, 19);
 		rNumNxt = uGetRandomInt(1, 19) * rNum;
 		var randAttr = phyAttr[attrIndex];
-		sum += 'is ' + rNum + ' times ' + randAttr[1] + ' than ';
+		sum += ' is ' + rNum + ' times ' + randAttr[1] + ' than ';
 		sum += rNames[1];
 		sum += '. ' + rNames[0] + '\'s ' + phyAttr[attrIndex][3] + ' is '
 				+ rNumNxt + phyAttr[attrIndex][0] + '.';
 		sum += 'What is ' + rNames[1] + '\'s ' + phyAttr[attrIndex][3] + ' ?';
-		correctAns = (rNumNxt/rNum);
+		correctAns = (rNumNxt / rNum);
 
 	}
 
@@ -233,15 +257,15 @@ M5.varrep = function() {
 
 	function divHard() {
 		var attrIndex = uGetRandomInt(1, phyAttr.length - 1);
-		sum += rNames[0];
 		rNum = uGetRandomInt(1, 8);
 		rNumNxt = uGetRandomInt(1, 19);
 		var randAttr = phyAttr[attrIndex];
-		sum += 'is 1/' + rNum + ' times ' + randAttr[1] + ' than ';
+		sum += rNames[0];
+		sum += ' is 1/' + rNum + ' times ' + randAttr[1] + ' than ';
 		sum += rNames[1];
-		sum += '. ' + rNames[1] + '\'s ' + phyAttr[attrIndex][3] + ' is '
+		sum += '. ' + rNames[0] + '\'s ' + phyAttr[attrIndex][3] + ' is '
 				+ rNumNxt + phyAttr[attrIndex][0] + '.';
-		sum += 'What is ' + rNames[0] + '\'s ' + phyAttr[attrIndex][3] + ' ?';
+		sum += ' What is ' + rNames[1] + '\'s ' + phyAttr[attrIndex][3] + ' ?';
 		correctAns = (rNumNxt * rNum);
 
 	}

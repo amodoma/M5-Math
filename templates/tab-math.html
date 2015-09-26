@@ -1,36 +1,40 @@
 <ion-view view-title="{{'math_5' | translate}}" class="color-calm">
     <ion-content class="padding">
-        <div class="list card">
-            <div class="item item-body reset-lr">
-                <div ng-class="sumSize()">{{numIntRs}}</div>
+        <div id="idBoxM" class="list card min-tb">
+            <div id="idBoxNumsWrap" class="item item-body reset-pbm color-calm item-text-wrap">
+
+                <div id="idBoxNums" >{{numIntRs}}</div>
             </div>
         </div>
-        <div class="list card">
+        <div id="idBoxB" class="list card min-tb">
             <div class="item reset-pbm add-mp-up-dn">
                 <div class="eq-dist">
-                    <button id="ans-btn-0" class="button button-calm half-w" ng-click="ansClick(0)">
+                    <button id="ans-btn-0" class="button button-calm half-w"
+                            ng-click="ansClick(0)">
                         {{ans0}}
                     </button>
-                    <button id="ans-btn-1" class="button button-calm half-w" ng-click="ansClick(1)">
+                    <button id="ans-btn-1" class="button button-calm half-w"
+                            ng-click="ansClick(1)">
                         {{ans1}}
                     </button>
                 </div>
                 <div class="eq-dist">
-                    <button id="ans-btn-2" class="button button-calm half-w" ng-click="ansClick(2)">
+                    <button id="ans-btn-2" class="button button-calm half-w"
+                            ng-click="ansClick(2)">
                         {{ans2}}
                     </button>
-                    <button id="ans-btn-3" class="button button-calm half-w" ng-click="ansClick(3)">
+                    <button id="ans-btn-3" class="button button-calm half-w"
+                            ng-click="ansClick(3)">
                         {{ans3}}
                     </button>
                 </div>
             </div>
         </div>
-        <div class="list card">
-            <div class="item item-body">
+        <div id="idBoxS" class="list card min-tb">
+            <div class="item item-body reset-pbm">
                 <div class="score">{{scoreAbs}}</div>
                 <div class="score">{{scorePercent}}</div>
             </div>
         </div>
-
     </ion-content>
 </ion-view>

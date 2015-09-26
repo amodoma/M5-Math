@@ -24,6 +24,7 @@
     <script src="js/lib/utilities.js"></script>
     <script src="js/lib/M5Routines.js"></script>
     <script src="js/lib/angular-translate.min.js"></script>
+    <script src="js/lib/ng-FitText.js"></script>
 
     <!-- your app's js -->
     <script src="js/app.js"></script>
@@ -35,6 +36,8 @@
     <script src="js/common-services/timer-ser.js"></script>
     <script src="js/common-services/log-ser.js"></script>
     <script src="js/common-services/setup-sum-ser.js"></script>
+    <script src="js/common-services/font-ser.js"></script>
+    <script src="js/common-services/layout-ser.js"></script>
 
     <!--Profit and loss-->
     <script src="js/p-and-l/p-and-l-service.js"></script>
@@ -59,9 +62,18 @@
     <script src="js/var-rep/var-rep.js"></script>
     <script src="js/var-rep/var-rep-ser.js"></script>
 
+    <!--Variable equations-->
+    <script src="js/var-eqn/var-eqn.js"></script>
+    <script src="js/var-eqn/var-eqn-ser.js"></script>
+
+    <!--Fraction <==> Decimal conversions-->
+    <script src="js/fra-dec/fra-dec.js"></script>
+    <script src="js/fra-dec/fra-dec-ser.js"></script>
+
     <!--Localisation-->
     <script src="js/localisation/en-mr-strings.js"></script>
     <script src="js/localisation/lang-service.js"></script>
+
 </head>
 
 <!--We tell AngularJS to use these modules to bootstrap our application. The
@@ -71,15 +83,17 @@ during bootstrapping.5th grade-->
 <!--
   The nav bar that will be updated as we navigate between views.
 -->
-<ion-nav-bar class="bar-stable">
-    <ion-nav-back-button>
-    </ion-nav-back-button>
+<ion-nav-bar id="idNavBar" class="bar-positive mynavbar">
+    <!--<ion-nav-back-button>
+    </ion-nav-back-button>-->
 </ion-nav-bar>
 <!--
   The views will be rendered in the <ion-nav-view> directive below
   Templates are in the /templates folder (but you could also
   have templates inline in this html file if you'd like).
 -->
-<ion-nav-view></ion-nav-view>
+<ion-nav-view id="idNavView"></ion-nav-view>
+
+
 </body>
 </html>

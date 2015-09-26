@@ -18,21 +18,34 @@ M5Services.factory('PandLSer', [
 			var sums = [];
 			var op = ['+', '-'];
 			var mLang = 'en';
+			var flagHard = false;
+			var mStrO;
 
 			// Sum answer
 			var sumAns = 0;
 			var wrongAns = [];
 
+			var hard = function(selOpt) {
+
+				flagHard = selOpt;
+
+			}
+
 			var start = function() {
 				var pl;
 
-				compute();
+				if (flagHard) {
+					computeH();
+				} else {
+					computeS();
+				}
+
 				wrongAns = spoof();
+
 				if (mLang == 'en')
 					pl = rSellPrice > rCostPrice ? ' profit' : ' loss';
 				else
 					pl = rSellPrice > rCostPrice ? ' नफा' : ' तोटा';
-
 				SetupSumSer.setupUi(sum, wrongAns, sumAns + pl);
 				LogSer.init(sum, sumAns + pl, wrongAns);
 
@@ -55,7 +68,7 @@ M5Services.factory('PandLSer', [
 
 			}
 
-			function compute() {
+			function computeH() {
 				mLang = LangSer.getLang();
 				uLog('compute getLang =' + mLang);
 
@@ -78,10 +91,10 @@ M5Services.factory('PandLSer', [
 
 				switch (selOp) {
 					case op[0] :
-						construct('profit');
+						constructH('profit');
 						break;
 					case op[1] :
-						construct('loss');
+						constructH('loss');
 						break;
 					default :
 						throw new Error('Unknown op selected!');
@@ -93,7 +106,60 @@ M5Services.factory('PandLSer', [
 
 			}
 
-			function construct(dir) {
+			function computeS() {
+				var selOp;
+				mLang = LangSer.getLang();
+				uLog('compute getLang =' + mLang);
+
+				sum = '';
+
+				if (mLang == 'en')
+					mStrO = M5.langStrings.getEnXlation();
+				else if (mLang == 'mr')
+					mStrO = M5.langStrings.getMrXlation();
+				else
+					throw new Error('Unknown Lang');
+
+				selOp = op[uGetRandomInt(0, op.length - 1)];
+				switch (selOp) {
+					case op[0] :
+						constructS('profit');
+						break;
+					case op[1] :
+						constructS('loss');
+						break;
+					default :
+						throw new Error('Unknown op selected!');
+						break;
+
+				}
+				uLog('Sum=' + sum);
+				return sum;
+
+			}
+
+			function constructS(dir) {
+				rCostPrice = uGetRandomInt(1, 99998);
+
+				if(uGetRandomInt(0,1))
+					rCostPrice *= 100;
+
+				if (dir == 'profit')
+					rSellPrice = uGetRandomInt(rCostPrice, 99999);
+				else if (dir == 'loss')
+					rSellPrice = uGetRandomInt(0, rCostPrice);
+				else
+					throw new Error('Unknown profit or loss');
+
+				sum += mStrO.buy +'  ' + rCostPrice;
+				sum += ','
+				sum += mStrO.sell +'  ' + rSellPrice;
+
+				sumAns = Math.abs(rSellPrice - rCostPrice);
+
+			}
+
+			function constructH(dir) {
 				rCostPrice = uGetRandomInt(1, 99998);
 
 				if (dir == 'profit')
@@ -158,6 +224,7 @@ M5Services.factory('PandLSer', [
 			}
 
 			return {
-				start : start
+				start : start,
+				hard : hard
 			}
 		}]);

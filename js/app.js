@@ -8,34 +8,59 @@
 angular.module(
 		'starter',
 		['ionic', 'pascalprecht.translate', 'starter.controllers',
-				'starter.services'])
+				'starter.services', 'ngFitText'])
 
-.run(function($ionicPlatform, $translate) {
-	$ionicPlatform.ready(function() {
+.run(
+		function($ionicPlatform, $translate) {
+			$ionicPlatform.ready(function() {
 
-		$translate.use("en").then(function(data) {
-			console.log("SUCCESS -> " + data);
-		}, function(error) {
-			console.log("ERROR -> " + error);
-		});
 
-		// Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-		// for form inputs)
-		var kb = window.cordova.plugins.Keyboard;
-		if (window.cordova && window.cordova.plugins && kb) {
-			cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-			cordova.plugins.Keyboard.disableScroll(true);
 
-			//navigator.splashscreen.hide();
+				// Check heights
+				var htBar = document.getElementById("idNavBar").offsetHeight;
+				var htView = document.getElementById("idNavView").offsetHeight;
+				var htTabs = document.getElementById("idTabs").offsetHeight;
+				var htTab1 = document.getElementById("idTab1").offsetHeight;
+				uLog('htBar=' + htBar + ',htView=' + htView + ',htTabs='
+						+ htTabs + ',htTab1=' + htTab1);
 
-		}
+				// M5.routines.testPromise();
+				$translate.use("en").then(function(data) {
+					console.log("SUCCESS -> " + data);
+				}, function(error) {
+					console.log("ERROR -> " + error);
+				});
 
-		if (window.StatusBar) {
-			// org.apache.cordova.statusbar required
-			StatusBar.styleLightContent();
-		}
-	});
-})
+				// Screen resolution
+				if (typeof (window.innerWidth) == 'number') {
+					var wH = window.innerHeight;
+					var wW = window.innerWidth;
+					uLog('wH = ' + wH + ' x ' + 'wW =' + wW);
+					var pxRatio = window.devicePixelRatio;
+					uLog('Including pxRatio:' + wH * pxRatio + ' x ' + wW
+							* pxRatio);
+
+				} else
+					uLog('Unknown win dim');
+
+				// Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
+				// for form inputs)
+				var kb = window.cordova.plugins.Keyboard;
+				if (window.cordova && window.cordova.plugins && kb) {
+					cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+					cordova.plugins.Keyboard.disableScroll(true);
+
+					//navigator.splashscreen.hide();
+
+				}
+
+				if (window.StatusBar) {
+					// org.apache.cordova.statusbar required
+					StatusBar.styleLightContent();
+				}
+
+			});
+		})
 
 .config(function($stateProvider, $urlRouterProvider, $translateProvider) {
 	// Ionic uses AngularUI Router which uses the concept of states
